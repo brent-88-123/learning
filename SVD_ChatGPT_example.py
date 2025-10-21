@@ -1,6 +1,8 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
+"""
 # -------------------------------
 # 1. True vehicle parameters (same as before)
 # -------------------------------
@@ -32,11 +34,21 @@ r_dot = (a*Cf/Iz_true)*delta \
 
 # Add small measurement noise
 r_dot_meas = r_dot + rng.normal(0, 0.002, size=len(t))
+"""
+
+# Open and read file
+LapFive = pd.read_csv("Matt_Romanowski_Watkins_Glenn_2022_lap5.csv")
+
+headers = LapFive.columns
+
+steer = LapFive["STEERINGPOSITION"].values
+yaw = LapFive["YawRate"].values
+LatAcc = LapFive["LateralAcc"].values
 
 # -------------------------------
 # 3. Build regression matrix
 # -------------------------------
-Phi = np.column_stack((delta, r, vy))
+Phi = np.column_stack((steer, yaw, LatAcc))
 Y = r_dot_meas
 
 # -------------------------------
